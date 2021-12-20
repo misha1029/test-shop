@@ -26,6 +26,11 @@ const arr = [
     price: 17000,
     imageUrl: "/imgT/33.jpg",
   },
+  {
+    name: 'Монитор 27" Acer Nitro VG271UPbmiipx',
+    price: 17000,
+    imageUrl: "/imgT/33.jpg",
+  },
 ];
 
 function App() {
