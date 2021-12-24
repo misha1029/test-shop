@@ -7,6 +7,13 @@ function CardItem(props) {
     alert(props.title);
   };
 
+  const [isAdded, setIsAdded] = React.useState(false);
+
+  const onClickPlus = () => {
+    setIsAdded(!isAdded)
+  };
+  console.log(isAdded)
+
   return (
     <div className={style.card}>
       <div className={style.favorite}>
@@ -19,7 +26,7 @@ function CardItem(props) {
           <span>Цена:</span>
           <b>{props.price} руб.</b>
         </div>
-        <button className={style.button} onClick={props.onClick}>
+        <button className = {isAdded ? style.buttonCheck : style.button}  onClick={onClickPlus}>
           <img width={11} height={11} src="./img/plus.png" alt="Plus" />
         </button>
       </div>

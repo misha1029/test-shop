@@ -34,10 +34,12 @@ const arr = [
 ];
 
 function App() {
+  const [cardOpened, setCardOpened] = React.useState(false)
+  
   return (
     <div className="wrapper clear">
-      <Drawer />
-      <HeaderItems />
+      {cardOpened && <Drawer onClose = {() => setCardOpened (false) } />}
+      <HeaderItems onClickCard = {() => setCardOpened (true)} />
       <div className="p-40">
         <div className="d-flex align-center justify-between mb-40">
           <h1>все товары</h1>

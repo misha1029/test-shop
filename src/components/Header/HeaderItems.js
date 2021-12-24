@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import styles from './HeaderItems.module.scss';
 
 
-function HeaderItem() {
+function HeaderItem(props) {
+  console.log(props)
     return (
       <header className='d-flex justify-between align-center p-40'>
         <div className="d-flex align-center">
@@ -14,7 +15,7 @@ function HeaderItem() {
           </div>
         </div>
         <ul className="d-flex align-center ">
-        <img width={20} height={20} src="./img/basket.png" alt="basket" />
+        <img onClick = {props.onClickCard} className = {styles.basket} width={20} height={20} src="./img/basket.png" alt="basket" />
             <li className="mr-30">
             <span className="ml-10">1205 руб.</span> 
             </li>
