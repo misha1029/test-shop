@@ -3,33 +3,25 @@ import ReactDOM from 'react-dom';
 import styles from './Drawer.module.scss';
 
 
-function Drawer(props) {
+function Drawer({onClose, items = []}) {
     return (
       <div className = "overlay">
             <div className = "drawer">
             <h2 className = "d-flex justify-between mb-30 ">Корзина 
-            <img onClick = {props.onClose} className = "removeBtn cu-p " src="./img/btn-remove.jpg" alt="Remove"/></h2>
+              <img onClick = {onClose} className = "removeBtn cu-p " src="./img/btn-remove.jpg" alt="Remove"/>
+            </h2>
 
             <div className = "drawerItems">
-              <div className = "cartItem d-flex align-center">
-                <div style = {{backgroundImage:'url(./imgT/11.jpg)'}} className = "cartItemImg" ></div>
-                <div className = "flex" >
-                  <p className="">Монитор 23.8" Acer Nitro VG240YSbmiipx</p>
-                  <b>12 999 руб.</b>
-                </div>
-                <img className = "removeBtn" src="./img/btn-remove.jpg" alt="Remove"/>
-              </div>
-
-              <div className = "cartItem d-flex align-center">
-                <div style = {{backgroundImage:'url(./imgT/11.jpg)'}} className = "cartItemImg" ></div>
-                <div className = "flex" >
-                  <p className="">Монитор 23.8" Acer Nitro VG240YSbmiipx</p>
-                  <b>12 999 руб.</b>
-                </div>
-                <img className = "removeBtn" src="./img/btn-remove.jpg" alt="Remove"/>
-              </div>
-              
-              
+              {items.map((obj) => (
+                            <div className = "cartItem d-flex align-center">
+                              <div style = {{backgroundImage:`url(${obj.imageUrl})`}} className = "cartItemImg" ></div>
+                              <div className = "flex" >
+                                <p className="">{obj.title}</p>
+                                <b>{obj.price} руб.</b>
+                              </div>
+                              <img className = "removeBtn" src="./img/btn-remove.jpg" alt="Remove"/>
+                            </div> 
+              ))}
             </div>
 
             <div className = "cardTotalBlock">

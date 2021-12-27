@@ -2,29 +2,30 @@ import React from "react";
 import ReactDOM from "react-dom";
 import style from "./CardItem.module.scss";
 
-function CardItem(props) {
+function CardItem({onFavorite, title, imageUrl, price, onPlus}) {
   const onClickButton = () => {
-    alert(props.title);
+    alert(title);
   };
 
   const [isAdded, setIsAdded] = React.useState(false);
 
   const onClickPlus = () => {
+    onPlus({title, imageUrl, price});
     setIsAdded(!isAdded)
   };
-  console.log(isAdded)
+  
 
   return (
     <div className={style.card}>
       <div className={style.favorite}>
         <img src="./img/unliked.jpg" alt="Unliked" />
       </div>
-      <img width={133} height={112} src={props.imageUrl} alt="Plus" />
-      <h5>{props.title}</h5>
+      <img width={133} height={112} src={imageUrl} alt="Plus" />
+      <h5>{title}</h5>
       <div className="d-flex justify-between align-center">
         <div className=" infoCardd-flex flex-colum">
           <span>Цена:</span>
-          <b>{props.price} руб.</b>
+          <b>{price} руб.</b>
         </div>
         <button className = {isAdded ? style.buttonCheck : style.button}  onClick={onClickPlus}>
           <img width={11} height={11} src="./img/plus.png" alt="Plus" />

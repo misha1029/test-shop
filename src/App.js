@@ -5,40 +5,36 @@ import CardItems from "./components/cardItem/CardItem.js";
 import HeaderItems from "./components/Header/HeaderItems.js";
 import Drawer from "./components/Drawer/Drawer.js";
 
-const arr = [
-  {
-    name: 'Монитор 24.5" Acer Nitro XV253QX',
-    price: 12999,
-    imageUrl: "/imgT/11.jpg",
-  },
-  {
-    name: 'Монитор 23.8" Acer Nitro VG240YSbmiipx',
-    price: 20000,
-    imageUrl: "/imgT/22.jpg",
-  },
-  {
-    name: 'Монитор 27" Acer Nitro VG271UPbmiipx',
-    price: 17000,
-    imageUrl: "/imgT/33.jpg",
-  },
-  {
-    name: 'Монитор 27" Acer Nitro VG271UPbmiipx',
-    price: 17000,
-    imageUrl: "/imgT/33.jpg",
-  },
-  {
-    name: 'Монитор 27" Acer Nitro VG271UPbmiipx',
-    price: 17000,
-    imageUrl: "/imgT/33.jpg",
-  },
-];
+
 
 function App() {
+  const [items, setItems] = React.useState([]);
+  const [cartItems, setCardItems] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState('');
   const [cardOpened, setCardOpened] = React.useState(false)
+
+  React.useEffect(() => {
+    fetch('https://61c6e2f49031850017547270.mockapi.io/items')
+    .then((res) => {
+      return res.json();
+    })
+    .then((json) => {
+      setItems(json)
+    })
+  }, []);
+
+  const addToCard = (obj) => {
+    setCardItems((prev) => [...prev, obj])
+  }
+
+  const onChangesetSearchInput = (event) => {
+    setSearchValue(event.target.value);
+  }
+
   
   return (
     <div className="wrapper clear">
-      {cardOpened && <Drawer onClose = {() => setCardOpened (false) } />}
+      {cardOpened && <Drawer items = {cartItems} onClose = {() => setCardOpened (false) } />}
       <HeaderItems onClickCard = {() => setCardOpened (true)} />
       <div className="p-40">
         <div className="d-flex align-center justify-between mb-40">
@@ -47,16 +43,19 @@ function App() {
             <div className="d-flex align-center">
               <img src="./img/search.jpg" alt="Search" />
             </div>
-            <input className="inputSearch" placeholder="Поиск..." />
+            {searchValue && <img className = "removeBtnApp cu-p " src="./img/btn-remove.jpg" alt="Close"/>}
+            <input onChange={onChangesetSearchInput} value = {searchValue} className="inputSearch" placeholder="Поиск..." />
           </div>
         </div>
         <div className="cardContainer d-flex">
-          {arr.map((obj) => (
+          {items.map((item, index) => (
             <CardItems
-              title={obj.name}
-              price={obj.price}
-              imageUrl={obj.imageUrl}
-              onClick = {() => console.log(obj)}
+              key = {index}
+              title={item.name}
+              price={item.price}
+              imageUrl={item.imageUrl}
+              onPlus = {(obj) => addToCard(obj)}
+              onFavorite = {() => console.log('Добавели в закладки')}
             />
           ))}
         </div>
