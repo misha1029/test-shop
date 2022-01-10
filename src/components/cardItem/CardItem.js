@@ -2,23 +2,27 @@ import React from "react";
 import ReactDOM from "react-dom";
 import style from "./CardItem.module.scss";
 
-function CardItem({onFavorite, title, imageUrl, price, onPlus}) {
-  const onClickButton = () => {
-    alert(title);
-  };
+function CardItem({ id ,onFavorite, title, imageUrl, price, onPlus, favorited = false}) {
 
   const [isAdded, setIsAdded] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState(favorited);
 
   const onClickPlus = () => {
     onPlus({title, imageUrl, price});
     setIsAdded(!isAdded)
   };
+
+  const onClickFavorite= () => {
+    onFavorite({id , title, imageUrl, price});
+    setIsFavorite(!isFavorite)
+  };
+
   
 
   return (
     <div className={style.card}>
       <div className={style.favorite}>
-        <img src="./img/unliked.jpg" alt="Unliked" />
+        <img onClick={onClickFavorite} src={isFavorite ? "./img/liked.jpg" :"./img/unliked.jpg"} alt="Unliked" />
       </div>
       <img width={133} height={112} src={imageUrl} alt="Plus" />
       <h5>{title}</h5>
