@@ -3,7 +3,35 @@ import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 import CardItems from "../components/cardItem/CardItem.js";
 
-function Home({ items, setSearchValue, searchValue, addToCard, setFavorite, addToFavorite}) {
+function Home({
+  id,
+  items,
+  cartItems,
+  setSearchValue,
+  searchValue,
+  addToCard,
+  setFavorite,
+  addToFavorite,
+  isLoading,
+}) {
+  const renderItems = () => {
+    const filteredItems = items.filter((item) =>
+      item.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    return (isLoading ? [...Array(10)] : filteredItems)
+      .map((item, index) => (
+        <CardItems
+          key={index}
+          onPlus={(obj) => addToCard(obj)}
+          onFavorite={(obj) => addToFavorite(obj)}
+          added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
+          loading={isLoading}
+          {...item}
+        />
+      ));
+  };
+
   return (
     <div className="p-40">
       <div className="d-flex align-center justify-between mb-40">
@@ -30,21 +58,7 @@ function Home({ items, setSearchValue, searchValue, addToCard, setFavorite, addT
           />
         </div>
       </div>
-      <div className="cardContainer d-flex">
-        {items
-
-          .filter((item) =>
-            item.name.toLowerCase().includes(searchValue.toLowerCase())
-          )
-          .map((item, index) => (
-            <CardItems
-              key={index}
-              onPlus={(obj) => addToCard(obj)}
-              onFavorite={(obj) => addToFavorite(obj)}
-              {...item}
-            />
-          ))}
-      </div>
+      <div className="cardContainer d-flex">{renderItems()}</div>
     </div>
   );
 }
