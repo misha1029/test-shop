@@ -5,7 +5,7 @@ const Loading = (props) => (
   <ContentLoader 
     speed={2}
     width={150}
-    height={265}
+    height={250}
     viewBox="0 0 150 265"
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"

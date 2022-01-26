@@ -3,17 +3,17 @@ import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 import CardItems from "../components/cardItem/CardItem.js";
 
+
 function Home({
-  id,
   items,
-  cartItems,
   setSearchValue,
   searchValue,
   addToCard,
-  setFavorite,
   addToFavorite,
   isLoading,
 }) {
+
+
   const renderItems = () => {
     const filteredItems = items.filter((item) =>
       item.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -25,7 +25,7 @@ function Home({
           key={index}
           onPlus={(obj) => addToCard(obj)}
           onFavorite={(obj) => addToFavorite(obj)}
-          added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
+
           loading={isLoading}
           {...item}
         />

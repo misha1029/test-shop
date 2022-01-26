@@ -2,12 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 import CardItems from "../components/cardItem/CardItem.js";
+import AppContext from "../Context"
 
 
-function Favorites({FavoriteItems, addToFavorite}) {
+function Favorites() {
+  const {favorite, addToFavorite} = React.useContext(AppContext);
+
   return (
     <div className="cardContainer d-flex">
-    {FavoriteItems
+    {favorite
 
       .map((item, index) => (
         <CardItems
