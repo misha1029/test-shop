@@ -6,9 +6,9 @@ import "./index.scss";
 import HeaderItems from "./components/Header/HeaderItems.js";
 import Drawer from "./components/Drawer/Drawer.js";
 import Home from "./pages/Home";
-import Favorites from "./pages/Favorites";
+import Favorites from "./pages/Favorites/Favorites";
 import AppContext from "./Context";
-import Orders from "./pages/Orders";
+import Orders from "./pages/Orders/Orders";
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -42,17 +42,28 @@ function App() {
 
   const addToCard = async (obj) => {
     try {
-      if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
+      const finenItem = cartItems.find((item) => Number(item.parentId) === Number(obj.id))
+      if (finenItem) {
         setCardItems((prev) =>
-          prev.filter((item) => Number(item.id) !== Number(obj.id))
+          prev.filter((item) => Number(item.parentId) !== Number(obj.id))
         );
-        await axios.delete(`https://61c6e2f49031850017547270.mockapi.io/cart`);
+        await axios.delete(`https://61c6e2f49031850017547270.mockapi.io/cart/${finenItem.id}`);
       } else {
         setCardItems((prev) => [...prev, obj]);
-        await axios.post(
+        const {data} = await axios.post(
           "https://61c6e2f49031850017547270.mockapi.io/cart",
           obj
         );
+        setCardItems((prev) => prev.map((item) => {
+          if(item.parentId === data.parentId){
+            return {
+              ...item,
+              id: data.id,
+            }
+          }
+          return item;
+        }));
+        
       }
     } catch {
       alert("Ощибка при добавлений в корзину");
@@ -82,7 +93,7 @@ function App() {
 
   const onRemaveCart = async (id) => {
     try {
-      setCardItems((prev) => prev.filter((item) => item.id !== id));
+      setCardItems((prev) => prev.filter((item) => Number(item.id) !== Number(id)));
       await axios.delete(
         `https://61c6e2f49031850017547270.mockapi.io/cart/${id}`
       );
@@ -92,7 +103,7 @@ function App() {
   };
 
   const isItemAdded = (id) => {
-    return cartItems.some((obj) => Number(obj.id) === Number(id));
+    return cartItems.some((obj) => Number(obj.parentId) === Number(id));
   };
 
   return (

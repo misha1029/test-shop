@@ -1,14 +1,26 @@
+.cartEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+
+  p {
+    width: 280px;
+    line-height: 24px;
+  }
+}
 
 
-.greenButtom{
+.greenButton {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  flex: 1;
-  margin-top: 30px;
+  margin-top: 20px;
   width: 100%;
-  height: 100px;
+  height: 40px;
   background: #9dd558;
   border-radius: 18px;
   border: 0;
@@ -26,7 +38,7 @@
     background: darken(#9dd558, $amount: 5%)
     
   }
-  img{
+  .imgGreenButton{
     position: absolute;
     right: 40px;
     transition: transform 0.2s ease-in-out
@@ -36,42 +48,4 @@
     font-size: 16px;
     font-weight: 500;
   }
-
-}
-
-
-.cartEmpty {
-  display: flex;
-  flex-direction: column;
-  align-items:center;
-  justify-content: center;
-  text-align: center;
-
-  p {
-    width: 280px;
-    line-height: 24px;
   }
-
-.greenButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  flex: 1;
-  margin-top: 20px;
-  width: 100%;
-  height: 200px;
-  background: #9dd558;
-  border-radius: 18px;
-  border: 0;
-  color:#fff;
-  cursor: pointer;
-  transition: background 0.1s ease-in-out;
-
-  &:hover {
-    img {
-      transform: rotate(180deg) translateX(3px);
-    }
-  }
-  }
-}

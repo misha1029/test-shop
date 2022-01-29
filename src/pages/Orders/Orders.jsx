@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-import CardItems from "../components/cardItem/CardItem.js";
+import CardItems from "../../components/cardItem/CardItem.js";
 import axios from "axios";
-import AppContext from "../Context"
-
+import AppContext from "../../Context";
+import styles from "./Orders.module.scss";
 
 function Orders({ FavoriteItems, addToFavorite }) {
-  const {addToCard } =React.useContext(AppContext)
+  const { addToCard } = React.useContext(AppContext);
 
   const [orders, setOrders] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -27,14 +27,15 @@ function Orders({ FavoriteItems, addToFavorite }) {
   }, []);
 
   return (
-    <div className="cardContainer d-flex">
-      {(isLoading ? [...Array(10)] : orders).map((item, index) => (
-        <CardItems
-        key={index}
-        loading={isLoading}
-        {...item}
-        />
-      ))}
+    <div className={styles.ordersContainer}>
+      <h1>Заказы</h1>
+      <div>
+        <div className="cardContainer d-flex">
+          {(isLoading ? [...Array(10)] : orders).map((item, index) => (
+            <CardItems key={index} loading={isLoading} {...item} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
