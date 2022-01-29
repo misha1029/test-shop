@@ -1,19 +1,34 @@
 header {
-
   border-bottom: 1px solid #eaeaea;
-    img {
-      display: flex;
-      align-items: center;
-      margin-right: 5px;
-    }
+  img {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+  }
 
-    h3,
-    p{
-      margin: 0;
-    }
-
+  h3,
+  p {
+    margin: 0;
+  }
 }
 
-.basket{
-  cursor : pointer;
+.basket {
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+}
+
+.basketContainer {
+  display: flex;
+  align-items: center;
 }

@@ -47,20 +47,20 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
           Корзина
           <img
             onClick={onClose}
-            className="removeBtn cu-p "
+            className={styles.removeBtn}
             src="./img/btn-remove.jpg"
             alt="Remove"
           />
         </h2>
         
           {items.length > 0 ? (
-            <div className="d-flex flex-column flex">
-              <div className="drawerItems">
+            <div className={styles.drawerItemsContainer}>
+              <div className={styles.drawerItems}>
                 {items.map((obj) => (
-                  <div key={obj.id} className="cartItem d-flex align-center">
+                  <div key={obj.id} className={styles.cartItem}>
                     <div
                       style={{ backgroundImage: `url(${obj.imageUrl})` }}
-                      className="cartItemImg"
+                      className={styles.cartItemImg}
                     ></div>
                     <div className="flex">
                       <p className="">{obj.name}</p>
@@ -68,7 +68,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                     </div>
                     <img
                       onClick={() => onRemove(obj.id)}
-                      className="removeBtn"
+                      className={styles.removeBtn}
                       src="./img/btn-remove.jpg"
                       alt="Remove"
                     />
@@ -88,7 +88,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                     <b>{(totalPrice / 100) * 5} руб.</b>
                   </li>
                 </ul>
-                <button onClick={onClickOrder} className="greenButtom">
+                <button onClick={onClickOrder} className={styles.greenButtom}>
                   <b>Оформить заказ</b>
                   <img src="./img/arrow1.png" alt="arrow" />
                 </button>

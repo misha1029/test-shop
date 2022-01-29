@@ -44,9 +44,9 @@ function CardItem({
           }
           <img width={133} height={112} src={imageUrl} alt="Plus" />
           <h5>{name}</h5>
-          <div className="d-flex justify-between align-center">
-            <div className=" infoCardd-flex flex-colum">
-              <span>Цена:</span>
+          <div className= {style.infoContainerCard}>
+            <div className={style.infoContainer}>
+              <span>Цена: </span>
               <b>{price} руб.</b>
             </div>
             {onPlus && (

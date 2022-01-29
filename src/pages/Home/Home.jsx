@@ -1,50 +1,46 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-import CardItems from "../components/cardItem/CardItem.js";
-
+import CardItems from "../../components/cardItem/CardItem.js";
+import AppContext from "../../Context";
+import styles from "./Home.module.scss";
 
 function Home({
   items,
-  setSearchValue,
   searchValue,
-  addToCard,
-  addToFavorite,
   isLoading,
 }) {
 
-
+  const { addToFavorite, setSearchValue, addToCard} = React.useContext(AppContext);
   const renderItems = () => {
     const filteredItems = items.filter((item) =>
       item.name.toLowerCase().includes(searchValue.toLowerCase())
     );
 
-    return (isLoading ? [...Array(10)] : filteredItems)
-      .map((item, index) => (
-        <CardItems
-          key={index}
-          onPlus={(obj) => addToCard(obj)}
-          onFavorite={(obj) => addToFavorite(obj)}
-
-          loading={isLoading}
-          {...item}
-        />
-      ));
+    return (isLoading ? [...Array(10)] : filteredItems).map((item, index) => (
+      <CardItems
+        key={index}
+        onPlus={(obj) => addToCard(obj)}
+        onFavorite={(obj) => addToFavorite(obj)}
+        loading={isLoading}
+        {...item}
+      />
+    ));
   };
 
   return (
-    <div className="p-40">
-      <div className="d-flex align-center justify-between mb-40">
+    <div className={styles.container}>
+      <div className={styles.homeContainer}>
         <h1>
           {searchValue ? `Поиск по запросу "${searchValue}"` : "Все товары"}
         </h1>
-        <div className="search d-flex align-center">
-          <div className="d-flex align-center">
+        <div className={styles.search}>
+          <div className={styles.imgContainer}>
             <img src="./img/search.jpg" alt="Search" />
           </div>
           {searchValue && (
             <img
-              className="removeBtnApp cu-p "
+              className={styles.removeBtnApp}
               onClick={() => setSearchValue("")}
               src="./img/btn-remove.jpg"
               alt="Clear"
@@ -53,7 +49,7 @@ function Home({
           <input
             onChange={(event) => setSearchValue(event.target.value)}
             value={searchValue}
-            className="inputSearch"
+            className={styles.inputSearch}
             placeholder="Поиск..."
           />
         </div>

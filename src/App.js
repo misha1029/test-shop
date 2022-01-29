@@ -5,7 +5,7 @@ import axios from "axios";
 import "./index.scss";
 import HeaderItems from "./components/Header/HeaderItems.js";
 import Drawer from "./components/Drawer/Drawer.js";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Favorites from "./pages/Favorites/Favorites";
 import AppContext from "./Context";
 import Orders from "./pages/Orders/Orders";
@@ -117,6 +117,8 @@ function App() {
         setCardOpened,
         setCardItems,
         addToCard,
+        setSearchValue,
+        setFavorite,
       }}
     >
       <div className="wrapper clear">
@@ -136,11 +138,7 @@ function App() {
               <Home
                 items={items}
                 cartItems={cartItems}
-                setSearchValue={setSearchValue}
                 searchValue={searchValue}
-                addToCard={addToCard}
-                setFavorite={setFavorite}
-                addToFavorite={addToFavorite}
                 isLoading={isLoading}
               />
             }

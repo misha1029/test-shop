@@ -9,9 +9,9 @@ function HeaderItem(props) {
   const { totalPrice } = useCart();
 
   return (
-    <header className="d-flex justify-between align-center p-40">
+    <header className={styles.container}>
       <Link to="/">
-        <div className="d-flex align-center">
+        <div className={styles.headerContainer}>
           <img width={40} height={40} src="./img/img1.png" alt="logo" />
           <div>
             <h3 className="text-uppercase">React Shop</h3>
@@ -19,7 +19,7 @@ function HeaderItem(props) {
           </div>
         </div>
       </Link>
-      <ul className="d-flex align-center ">
+      <ul className={styles.basketContainer}>
         <img
           onClick={props.onClickCard}
           className={styles.basket}
