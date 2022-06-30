@@ -1,10 +1,18 @@
 import React from "react";
 import AppContext from "../../Context";
-import { Link } from "react-router-dom";
+
 import styles from "./Info.module.scss";
 
-export const Info = ({ title, image, discription }) => {
+ 
+export const Info = ({ title, image, discription, onClose }) => {
   const { setCardOpened } = React.useContext(AppContext);
+
+
+  const onCloseOrder = () => {
+    setCardOpened(false)
+    onClose(false)
+  }
+
   return (
     <div className={styles.cartEmpty}>
       <img class="mb-10" width="120px" src={image} alt="Empty" />
@@ -12,7 +20,7 @@ export const Info = ({ title, image, discription }) => {
       <p class="opacity-6">{discription}</p>
 
       <button
-        onClick={() => setCardOpened(false)}
+        onClick={onCloseOrder}
         className={styles.greenButton}
       >
         <div className={styles.imgGreenButton}>

@@ -18,6 +18,7 @@ function Orders({ FavoriteItems, addToFavorite }) {
         const { data } = await axios.get(
           "https://61c6e2f49031850017547270.mockapi.io/orders"
         );
+        console.log(data, 'ORDERS')
         setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
         setIsLoading(false);
       } catch {

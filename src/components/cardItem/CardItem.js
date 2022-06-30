@@ -1,43 +1,74 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import style from "./CardItem.module.scss";
 import Loading from "../Loading/Loading";
-import AppContext from "../../Context";
+
+import { useSelector, useDispatch } from "react-redux";
+import { addItem} from '../../redux/cart/slise'
+import { selectCartItemById } from "../../redux/cart/selectors";
+import {removeItem} from "../../redux/cart/slise";
+import { addFavorite, removeFavorite } from "../../redux/favorited/slice";
+import { selectFavoriteItemById } from "../../redux/favorited/selectors";
+import {selectItems} from '../../redux/items/selectors'
 
 function CardItem({
   id,
-  onFavorite,
   name,
   imageUrl,
   price,
-  onPlus,
   favorited = false,
   loading = false,
 }) {
-  const { isItemAdded } = React.useContext(AppContext);
   const [isFavorite, setIsFavorite] = React.useState(favorited);
-  const obj = { id, parentId: id, name, imageUrl, price }
 
-  const onClickPlus = () => {
-    onPlus(obj);
+  const dispatch = useDispatch();
+  const cartItem = useSelector(selectCartItemById(id));
+  const addedCount = cartItem ? cartItem.count : 0;
+
+  const { items, status } = useSelector(selectItems);
+  const favoriteItem = useSelector(selectFavoriteItemById(id));
+
+
+  const onClickAdd = () => {
+    const item= {
+      id,
+      name,
+      price,
+      imageUrl,
+      count: 0,
+    };
+    if(addedCount){
+      dispatch(removeItem(id));
+    }else{
+      dispatch(addItem(item));
+    }
   };
 
-  const onClickFavorite = () => {
-    onFavorite(obj);
-    setIsFavorite(!isFavorite);
+  const onClickAddFavorite = () => {
+    const item= {
+      id,
+      name,
+      price,
+      imageUrl,
+    };
+    if(favoriteItem){
+      dispatch(removeFavorite(id));
+    }else{
+      dispatch(addFavorite(item));
+      setIsFavorite(!isFavorite);
+    }
   };
 
   return (
     <div className={style.card}>
-      {loading ? (
+      {status === 'loading' ? (
         <Loading />
       ) : (
         <>
-          {onFavorite &&
+          {setIsFavorite &&
             <div className={style.favorite}>
               <img
-                onClick={onClickFavorite}
-                src={isFavorite ? "./img/liked.jpg" : "./img/unliked.jpg"}
+                onClick={onClickAddFavorite}
+                src={favoriteItem ? "./img/liked.jpg" : "./img/unliked.jpg"}
                 alt="Unliked"
               />
             </div>
@@ -47,16 +78,16 @@ function CardItem({
           <div className= {style.infoContainerCard}>
             <div className={style.infoContainer}>
               <span>Цена: </span>
-              <b>{price} руб.</b>
+              <b>{price} грн.</b>
             </div>
-            {onPlus && (
+            
               <button
-                className={isItemAdded(id) ? style.buttonCheck : style.button}
-                onClick={onClickPlus}
+                className={addedCount ? style.buttonCheck : style.button}
+                onClick={onClickAdd}
               >
                 <img width={11} height={11} src="./img/plus.png" alt="Plus" />
               </button>
-            )}
+            
           </div>
         </>
       )}

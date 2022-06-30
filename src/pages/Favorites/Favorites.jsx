@@ -1,25 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ReactDOM from "react-dom";
 import CardItems from "../../components/cardItem/CardItem.js";
-import AppContext from "../../Context";
 import styles from "./Favorites.module.scss";
+
+import { useSelector } from "react-redux";
+import {selectFavorite} from '../../redux/favorited/selectors'
 
 
 function Favorites() {
-  const { favorite, addToFavorite } = React.useContext(AppContext);
+
+const { items } = useSelector(selectFavorite);
 
   return (
-    <div className={`${styles.container} ${favorite.length > 0 ? '' : styles.containerOwer}`}>
-      {favorite.length > 0 ? (
+    <div className={`${styles.container} ${items.length > 0 ? '' : styles.containerOwer}`}>
+      {items.length > 0 ? (
         <div className={styles.favoritContainer}>
           <h1>Избранное</h1>
           <div className="cardContainer d-flex">
-            {favorite.map((item, index) => (
+            {items.map((item, index) => (
               <CardItems
                 key={index}
-                favorited={true}
-                onFavorite={addToFavorite}
                 {...item}
               />
             ))}

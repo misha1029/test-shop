@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 import styles from "./HeaderItems.module.scss";
 import AppContext from "../../Context";
-import { useCart } from "../Hooks/useCart";
+
 
 function HeaderItem(props) {
-  const { totalPrice } = useCart();
 
   return (
     <header className={styles.container}>
@@ -29,7 +28,7 @@ function HeaderItem(props) {
           alt="basket"
         />
         <li className="mr-30">
-          <span className="ml-10">{totalPrice} руб.</span>
+          <span className="ml-10">{'тотал'} грн.</span>
         </li>
         <li>
           <Link to="/favorites">

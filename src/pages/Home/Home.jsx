@@ -5,24 +5,39 @@ import CardItems from "../../components/cardItem/CardItem.js";
 import AppContext from "../../Context";
 import styles from "./Home.module.scss";
 
+import { useSelector, useDispatch } from "react-redux";
+import { setItems, fetchItems } from "../../redux/items/slice";
+import {selectItems} from '../../redux/items/selectors'
+
 function Home({
-  items,
   searchValue,
-  isLoading,
 }) {
 
-  const { addToFavorite, setSearchValue, addToCard} = React.useContext(AppContext);
+  const dispatch = useDispatch();
+  const { items, status } = useSelector(selectItems);
+
+  console.log(status, 'STAATUS')
+
+  const getItems = async () => {
+    dispatch(fetchItems());
+
+  };
+
+  React.useEffect(() => {
+    getItems();
+  }, []);
+
+
+  const { setSearchValue} = React.useContext(AppContext);
+
   const renderItems = () => {
     const filteredItems = items.filter((item) =>
       item.name.toLowerCase().includes(searchValue.toLowerCase())
     );
 
-    return (isLoading ? [...Array(10)] : filteredItems).map((item, index) => (
+    return (status === 'loading' ? [...Array(10)] : filteredItems).map((item, index) => (
       <CardItems
         key={index}
-        onPlus={(obj) => addToCard(obj)}
-        onFavorite={(obj) => addToFavorite(obj)}
-        loading={isLoading}
         {...item}
       />
     ));
